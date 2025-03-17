@@ -12,3 +12,11 @@ messagesApp::~messagesApp()
 {
     delete ui;
 }
+
+void messagesApp::on_sendButton_clicked()
+{
+    QString message = ui->messageInput->toPlainText();
+    ui->chatText->append(message.prepend("\n**message:** "));
+    ui->messageInput->clear();
+}
+

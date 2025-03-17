@@ -17,6 +17,9 @@ public:
     messagesApp(QWidget *parent = nullptr);
     ~messagesApp();
 
+private slots:
+    void on_sendButton_clicked();
+
 private:
     Ui::messagesApp *ui;
 };

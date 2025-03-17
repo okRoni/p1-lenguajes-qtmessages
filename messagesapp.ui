@@ -31,7 +31,7 @@
      <height>601</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="MainLayout">
+   <layout class="QHBoxLayout" name="mainLayout">
     <property name="leftMargin">
      <number>4</number>
     </property>
@@ -45,7 +45,7 @@
      <number>4</number>
     </property>
     <item>
-     <layout class="QVBoxLayout" name="ContactsLayout">
+     <layout class="QVBoxLayout" name="contactsLayout">
       <item>
        <widget class="QListWidget" name="listWidget">
         <property name="sizePolicy">
@@ -65,9 +65,9 @@
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="ChatLayout">
+     <layout class="QVBoxLayout" name="chatLayout">
       <item>
-       <widget class="QTextEdit" name="textEdit">
+       <widget class="QTextEdit" name="chatText">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -83,9 +83,9 @@
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="InputLayout">
+       <layout class="QHBoxLayout" name="inputLayout">
         <item>
-         <widget class="QPlainTextEdit" name="plainTextEdit">
+         <widget class="QPlainTextEdit" name="messageInput">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
             <horstretch>0</horstretch>
@@ -107,10 +107,13 @@
           <property name="cursor" stdset="0">
            <cursorShape>IBeamCursor</cursorShape>
           </property>
+          <property name="placeholderText">
+           <string>Enter your message here</string>
+          </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="sendButton">
           <property name="text">
            <string>Send</string>
           </property>
