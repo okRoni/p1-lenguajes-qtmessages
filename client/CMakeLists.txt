@@ -38,6 +38,8 @@ else()
     else()
         add_executable(p1-lenguajes-qtmessages
             ${PROJECT_SOURCES}
+            chat.h chat.cpp
+            connection.h connection.cpp
         )
     endif()
 endif()
