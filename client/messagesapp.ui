@@ -20,7 +20,8 @@
    <string>messagesApp</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="QIcon::ThemeIcon::MailMarkUnread"/>
+   <iconset theme="QIcon::ThemeIcon::MailMarkUnread">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
@@ -32,6 +33,9 @@
     </rect>
    </property>
    <layout class="QHBoxLayout" name="mainLayout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
     <property name="leftMargin">
      <number>4</number>
     </property>
@@ -46,6 +50,13 @@
     </property>
     <item>
      <layout class="QVBoxLayout" name="contactsLayout">
+      <item>
+       <widget class="QLabel" name="contactLabel">
+        <property name="text">
+         <string>Contactos:</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QListWidget" name="listWidget">
         <property name="sizePolicy">
@@ -66,6 +77,41 @@
     </item>
     <item>
      <layout class="QVBoxLayout" name="chatLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Chat con:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTextEdit" name="contactText">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>48</height>
+         </size>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QTextEdit" name="chatText">
         <property name="sizePolicy">
@@ -118,7 +164,8 @@
            <string>Send</string>
           </property>
           <property name="icon">
-           <iconset theme="QIcon::ThemeIcon::MailSend"/>
+           <iconset theme="QIcon::ThemeIcon::MailSend">
+            <normaloff>.</normaloff>.</iconset>
           </property>
          </widget>
         </item>

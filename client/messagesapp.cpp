@@ -16,7 +16,8 @@ messagesApp::~messagesApp()
 void messagesApp::on_sendButton_clicked()
 {
     QString message = ui->messageInput->toPlainText();
-    ui->chatText->append(message.prepend("\n**message:** "));
+    QString contact = ui->contactText->toPlainText();
+    ui->chatText->append(message.prepend("\nme: "));
     ui->messageInput->clear();
 }
 
