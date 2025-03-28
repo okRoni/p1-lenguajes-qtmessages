@@ -1,5 +1,6 @@
 #include "messagesapp.h"
 #include "./ui_messagesapp.h"
+#include "chat.h"
 
 messagesApp::messagesApp(QWidget *parent)
     : QWidget(parent)
@@ -17,7 +18,11 @@ void messagesApp::on_sendButton_clicked()
 {
     QString message = ui->messageInput->toPlainText();
     QString contact = ui->contactText->toPlainText();
-    ui->chatText->append(message.prepend("\nme: "));
+
     ui->messageInput->clear();
+
+    chat::sendMessage(contact.toStdString(), message.toStdString());
+
+    ui->chatText->append(message.prepend("\nme: "));
 }
 

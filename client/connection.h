@@ -8,12 +8,19 @@
 #include <unistd.h>
 #include <arpa/inet.h>   // inet_pton()
 #include <string.h>
+#include <optional>
 
 class connection
 {
+private:
+    int clientSocket;
+    static std::optional<connection> currentConnection;
 public:
+    std::string username;
     connection();
-    void start(std::string username);
+    void registerUser(std::string username);
+    static connection getConnection();
+    int getClientSocket();
 };
 
 #endif // CONNECTION_H
