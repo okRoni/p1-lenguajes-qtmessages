@@ -8,47 +8,73 @@
 #include <unistd.h>
 #include <string.h>
 
-std::map<std::string, int> clients;  // Almacena los clientes por nombre de usuario
+std::map<std::string, int> clientSockets; // map of currently connected clients
 std::mutex clients_mutex;
 const int PORT = 12345;
 
-void handle_client(int client_socket) {
+int sendMessage(const std::string& sender, const std::string& recipient, const std::string& content) {
+    // check if sender and recipient are valid
+    if (clientSockets.count(sender) == 0) {
+        std::cerr << "Sender not found: " << sender << "\n";
+        return -1;
+    }
+    if (clientSockets.count(recipient) == 0) {
+        std::cerr << "Recipient not found: " << recipient << "\n";
+        return -1;
+    }
+
+    // send message
+    int senderSocket = clientSockets[sender];
+    int recipientSocket = clientSockets[recipient];
+    std::lock_guard<std::mutex> lock(clients_mutex);
+    send(recipientSocket, content.c_str(), content.size(), 0);
+}
+
+int processMessage(const std::string& message) {
+    size_t contactSeparator = message.find("->"); // separator bwtwn sender and recipient
+    size_t messageSeparator = message.find(":"); // separator bwtwn contacts and message
+    // ommit invalid messages
+    if (contactSeparator == std::string::npos || messageSeparator == std::string::npos) {
+        std::cerr << "Invalid message format: " << message << "\n";
+        return -1;
+    }
+    std::string sender = message.substr(0, contactSeparator);
+    std::string recipient = message.substr(contactSeparator + 2, messageSeparator - contactSeparator - 2); 
+    std::string content = message.substr(messageSeparator + 1);
+    std::cout << "Message of " << sender << " to " << recipient << ":\n" << content << "\n\n";
+
+    // check if sender and recipient are valid
+    return 0;
+}
+
+void handleClient(int client_socket) {
     char buffer[1024] = {0};
-    // Recibir nombre de usuario
+    // recieve username (first thing the client sends)
     read(client_socket, buffer, 1024);
     std::string username(buffer);
 
-    { // Sección crítica para registrar el usuario
+    { // register client
         std::lock_guard<std::mutex> lock(clients_mutex);
-        clients[username] = client_socket;
-        std::cout << username << " conectado.\n";
+        clientSockets[username] = client_socket;
+        std::cout << username << " connected.\n";
     }
 
     while (true) {
         memset(buffer, 0, sizeof(buffer));
         int bytes_read = read(client_socket, buffer, 1024);
-        if (bytes_read <= 0) break;  // Cliente desconectado
-
+        if (bytes_read <= 0) break;  // desconected client
+        
+        // process message
         std::string message(buffer);
-        size_t sep = message.find(':');
-        if (sep == std::string::npos) continue;
-
-        std::string recipient = message.substr(0, sep);
-        std::string content = message.substr(sep + 1);
-
-        std::lock_guard<std::mutex> lock(clients_mutex);
-        if (clients.count(recipient)) {
-            int recipient_socket = clients[recipient];
-            send(recipient_socket, content.c_str(), content.size(), 0);
-        } else {
-            std::string error_msg = "Usuario no encontrado\n";
-            send(client_socket, error_msg.c_str(), error_msg.size(), 0);
+        if (processMessage(message) == -1) {
+            std::cerr << "Error processing message: " << message << "\n";
+            continue;
         }
     }
 
-    { // Eliminar cliente al desconectarse
+    { // delete client of currently connected clients map
         std::lock_guard<std::mutex> lock(clients_mutex);
-        clients.erase(username);
+        clientSockets.erase(username);
         std::cout << username << " desconectado.\n";
     }
     close(client_socket);
@@ -68,7 +94,7 @@ int main() {
 
     while (true) {
         int client_socket = accept(server_fd, nullptr, nullptr);
-        std::thread(handle_client, client_socket).detach();
+        std::thread(handleClient, client_socket).detach();
     }
 
     close(server_fd);

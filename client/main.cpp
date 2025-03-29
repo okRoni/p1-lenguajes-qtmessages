@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     }
 
     connection net;
-    net.start(username.toStdString());
+    net.registerUser(username.toStdString());
 
     w.show();
     return a.exec();
