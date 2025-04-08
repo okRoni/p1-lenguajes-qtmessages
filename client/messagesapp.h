@@ -2,6 +2,7 @@
 #define MESSAGESAPP_H
 
 #include <QWidget>
+#include "chat.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -16,6 +17,7 @@ class messagesApp : public QWidget
 public:
     messagesApp(QWidget *parent = nullptr);
     ~messagesApp();
+    chat *chatInstance;
 
 private slots:
     void on_sendButton_clicked();

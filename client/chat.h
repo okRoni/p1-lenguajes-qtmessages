@@ -9,7 +9,7 @@ class chat : public QObject  // Inherit from QObject
     Q_OBJECT  // Enable Qt's meta-object features
 public:
     chat();
-    static void sendMessage(std::string recipient, std::string message);
+    void sendMessage(std::string recipient, std::string message);
 
 public slots:
     void renderMessage(const QString& senderName, const QString& message);  // Slot for handling messages

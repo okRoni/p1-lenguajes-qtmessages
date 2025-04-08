@@ -4,7 +4,7 @@
 
 chat::chat() {
     connection& net = connection::getConnection();
-    QObject::connect(&net, &connection::messageReceived, this, &chat::renderMessage);  // Connect signal to slot
+    QObject::connect(&net, &connection::messageReceived, this, &chat::renderMessage, Qt::QueuedConnection);  // Use QueuedConnection
 }
 
 void chat::sendMessage(std::string destinatary, std::string message) {
@@ -17,5 +17,5 @@ void chat::sendMessage(std::string destinatary, std::string message) {
 }
 
 void chat::renderMessage(const QString& senderName, const QString& message) {
-    std::cout << "Message from" << senderName.toStdString() << ":" << message.toStdString() << "\n";
+    std::cout << "Message from " << senderName.toStdString() << ": " << message.toStdString() << "\n";
 }

@@ -4,7 +4,7 @@
 const int PORT = 12345;
 const std::string SERVER_IP = "127.0.0.1";  // Dirección local para pruebas
 
-connection* connection::currentConnection = nullptr;  // Initialize to nullptr
+connection* connection::currentConnection = nullptr; 
 
 connection::connection() {
     clientSocket = socket(AF_INET, SOCK_STREAM, 0);
@@ -20,9 +20,8 @@ connection::~connection() {
 }
 
 void connection::startReceiving() {
-    std::cout << "Starting message receiver thread...\n";
     running = true;
-    receiverThread = std::thread(&connection::messageReceiver, this);  // Start the thread
+    receiverThread = std::thread(&connection::messageReceiver, this);
 }
 
 void connection::registerUser(std::string username) {
@@ -41,7 +40,6 @@ void connection::registerUser(std::string username) {
 }
 
 void connection::messageReceiver() {
-    std::cout << "Message receiver thread started.\n";
     char buffer[1024];
     while (running) {
         memset(buffer, 0, sizeof(buffer));
@@ -51,10 +49,10 @@ void connection::messageReceiver() {
         std::string message(buffer);
         size_t separator = message.find("->");
         if (separator != std::string::npos) {
-            std::cout << "Message received\n";
             std::string sender = message.substr(0, separator);
             std::string content = message.substr(separator + 2);
-            emit messageReceived(QString::fromStdString(sender), QString::fromStdString(content));  // Emit signal
+
+            emit messageReceived(QString::fromStdString(sender), QString::fromStdString(content));
         }
     }
 }
