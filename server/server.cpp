@@ -28,6 +28,8 @@ int sendMessage(const std::string& sender, const std::string& recipient, const s
     int recipientSocket = clientSockets[recipient];
     std::lock_guard<std::mutex> lock(clients_mutex);
     send(recipientSocket, content.c_str(), content.size(), 0);
+
+    return 0;
 }
 
 int processMessage(const std::string& message) {
@@ -75,7 +77,7 @@ void handleClient(int client_socket) {
     { // delete client of currently connected clients map
         std::lock_guard<std::mutex> lock(clients_mutex);
         clientSockets.erase(username);
-        std::cout << username << " desconectado.\n";
+        std::cout << username << " disconnected.\n";
     }
     close(client_socket);
 }
@@ -90,7 +92,7 @@ int main() {
     bind(server_fd, (struct sockaddr*)&address, sizeof(address));
     listen(server_fd, 5);
 
-    std::cout << "Servidor escuchando en el puerto " << PORT << "...\n";
+    std::cout << "Listening in port  " << PORT << "...\n";
 
     while (true) {
         int client_socket = accept(server_fd, nullptr, nullptr);

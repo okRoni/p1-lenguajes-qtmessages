@@ -5,10 +5,10 @@
 chat::chat() {}
 
 void chat::sendMessage(std::string destinatary, std::string message) {
-    connection cone = connection::getConnection();
-    std::string sender = cone.username;
+    connection& net = connection::getConnection();  // Change to reference
+    std::string sender = net.getUsername();
 
     message = sender + "->" + destinatary + ":" + message;
 
-    send(cone.getClientSocket(), message.c_str(), message.size(), 0);
+    send(net.getClientSocket(), message.c_str(), message.size(), 0);
 }

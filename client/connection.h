@@ -15,12 +15,13 @@ class connection
 private:
     int clientSocket;
     static std::optional<connection> currentConnection;
-public:
     std::string username;
+public:
     connection();
     void registerUser(std::string username);
-    static connection getConnection();
+    static connection& getConnection();  // Changed to return reference
     int getClientSocket();
+    std::string getUsername();
 };
 
 #endif // CONNECTION_H

@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    connection net;
+    connection& net = connection::getConnection();  // Change to reference
     net.registerUser(username.toStdString());
 
     w.show();
