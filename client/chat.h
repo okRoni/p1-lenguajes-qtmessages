@@ -1,18 +1,24 @@
 #ifndef CHAT_H
 #define CHAT_H
 
-#include <string>
-#include <QObject>  // Include QObject for signals and slots
+#include <QObject>
+#include <QString>
 
-class chat : public QObject  // Inherit from QObject
-{
-    Q_OBJECT  // Enable Qt's meta-object features
+class messagesApp;  // Forward declaration
+
+class chat : public QObject {
+    Q_OBJECT
+
 public:
     chat();
-    void sendMessage(std::string recipient, std::string message);
+    void sendMessage(std::string destinatary, std::string message);
+    void setMessagesApp(messagesApp* app);  // New method
 
-public slots:
-    void renderMessage(const QString& senderName, const QString& message);  // Slot for handling messages
+private slots:
+    void renderMessage(const QString& senderName, const QString& message);
+
+private:
+    messagesApp* app;  // New member
 };
 
 #endif // CHAT_H

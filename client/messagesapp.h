@@ -24,5 +24,8 @@ private slots:
 
 private:
     Ui::messagesApp *ui;
+
+public:
+    Ui::messagesApp *getUi() { return ui; }  // Getter for ui
 };
 #endif // MESSAGESAPP_H

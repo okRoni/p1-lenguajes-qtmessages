@@ -9,6 +9,7 @@ messagesApp::messagesApp(QWidget *parent)
     
     // instace chat
     chatInstance = new chat();
+    chatInstance->setMessagesApp(this);  // Add this line
 }
 
 messagesApp::~messagesApp()
