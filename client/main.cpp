@@ -21,9 +21,12 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    connection& net = connection::getConnection();  // Change to reference
+    connection& net = connection::getConnection();
     net.registerUser(username.toStdString());
 
     w.show();
-    return a.exec();
+    int result = a.exec();
+
+    connection::destroyConnection();  // Clean up the singleton instance
+    return result;
 }

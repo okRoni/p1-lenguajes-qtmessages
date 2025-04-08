@@ -43,9 +43,10 @@ int processMessage(const std::string& message) {
     std::string sender = message.substr(0, contactSeparator);
     std::string recipient = message.substr(contactSeparator + 2, messageSeparator - contactSeparator - 2); 
     std::string content = message.substr(messageSeparator + 1);
-    std::cout << "Message of " << sender << " to " << recipient << ":\n" << content << "\n\n";
+    std::string proccesedMessage = sender + "->" + content;
+    std::cout << "\nMessage of " << sender << " to " << recipient << ":\n" << content << "\n";
 
-    // check if sender and recipient are valid
+    sendMessage(sender, recipient, proccesedMessage);
     return 0;
 }
 
