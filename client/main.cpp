@@ -5,6 +5,7 @@
 #include <QInputDialog>
 #include <QString>
 #include <QMessageBox>
+#include <fstream>
 
 int main(int argc, char *argv[])
 {
@@ -23,6 +24,17 @@ int main(int argc, char *argv[])
 
     connection& net = connection::getConnection();
     net.registerUser(username.toStdString());
+
+    // check local save file
+    std::ifstream file("messages.txt");
+    if (!file.good()) {
+        std::ofstream createFile("messages.txt");
+        createFile.close();
+    }
+    // clean local message file
+    std::ofstream clearFile("messages.txt", std::ios::trunc);
+    file.close();
+    
 
     w.show();
     int result = a.exec();

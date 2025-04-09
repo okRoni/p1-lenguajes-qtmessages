@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "chat.h"
+#include <QListWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -21,6 +22,10 @@ public:
 
 private slots:
     void on_sendButton_clicked();
+
+    void on_contactsList_itemClicked(QListWidgetItem *item);
+
+    void on_newChatButton_clicked();
 
 private:
     Ui::messagesApp *ui;

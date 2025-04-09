@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <vector>
 
 class messagesApp;  // Forward declaration
 
@@ -13,12 +14,15 @@ public:
     chat();
     void sendMessage(std::string destinatary, std::string message);
     void setMessagesApp(messagesApp* app);  // New method
+    void loadContactMessages(const std::string& contact);
 
 private slots:
-    void renderMessage(const QString& senderName, const QString& message);
+    void handleIncomingMessage(const QString& senderName, const QString& message);
 
 private:
     messagesApp* app;  // New member
+    std::vector<std::string> contacts;
+    void renderMessage(const QString& senderName, const QString& message);
 };
 
 #endif // CHAT_H

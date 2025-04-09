@@ -146,6 +146,10 @@ int sendDueMessages(const std::string& destinatary, const std::vector<std::strin
             processedMessage = sender + "->" + content + "\n";
         }
 
+        // wait a little bit before sending the message
+        // this is so the client can process the message
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
         send(socket, processedMessage.c_str(), processedMessage.size(), 0);
     }
 
