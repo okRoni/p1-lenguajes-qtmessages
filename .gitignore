@@ -82,3 +82,7 @@ CMakeLists.txt.user*
 /build*/
 .vscode/
 build
+
+# generated files
+messages.txt
+users.txt
